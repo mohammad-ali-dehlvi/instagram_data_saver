@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "frontend": "cd ./frontend && npm run dev",
+        "generate-client": "cd ./frontend && npm run generate-client",
+        "backend": "cd ./backend && uvicorn main:app",
+        "backend-test": "cd ./backend && python -m utils.test.main"
+    }
+}
