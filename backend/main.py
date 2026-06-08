@@ -15,8 +15,8 @@ from fastapi.middleware.cors import CORSMiddleware
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    playwright = await async_playwright().start()
-    app.state.playwright = playwright
+    # playwright = await async_playwright().start()
+    # app.state.playwright = playwright
     # browser = await playwright.chromium.launch(headless=True)
     # context = await browser.new_context(storage_state="data/beast.json")
     print("STARTED")
@@ -24,7 +24,7 @@ async def lifespan(app: FastAPI):
     print("STOPPED")
     # await context.close()
     # await browser.close()
-    await playwright.stop()
+    # await playwright.stop()
 
 app = FastAPI(
     lifespan=lifespan
@@ -41,6 +41,17 @@ app.add_middleware(
 
 app.include_router(stories_router)
 app.include_router(posts_router)
+
+@app.get("/test")
+async def test():
+    async with async_playwright() as p:
+        browser = await p.chromium.launch()
+        context = await browser.new_context(storage_state="data/beast.json")
+        page = await context.new_page()
+
+        await page.goto("https://www.google.com/")
+
+        return await page.content()
 
 
 if __name__ == "__main__":

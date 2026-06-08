@@ -1,6 +1,6 @@
 import json
 import re
-from playwright.async_api import Browser, Page, Playwright, async_playwright
+from playwright.async_api import Page, async_playwright
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -123,27 +123,28 @@ def extract_stories_media(data: list[Any], download: bool = False):
     return story_response
 
 
-async def save_story(url_or_id: str, pbc: Playwright | Browser):
-    # async with async_playwright() as p:
-    browser = await pbc.chromium.launch(channel='chrome', headless=True) if isinstance(pbc, Playwright) else pbc
-    context = await browser.new_context(storage_state='data/beast.json')
-    page = await context.new_page()
+async def save_story(url_or_id: str):
+    async with async_playwright() as p:
+    # p = await async_playwright().start() if not pbc else pbc
+        browser = await p.chromium.launch(channel='chrome', headless=True)
+        context = await browser.new_context(storage_state='data/beast.json')
+        page = await context.new_page()
 
-    # URL = f'https://www.instagram.com/stories/{id}/'
-    URL = url_or_id if url_or_id.startswith('https') else f'https://www.instagram.com/stories/{url_or_id}/'
+        # URL = f'https://www.instagram.com/stories/{id}/'
+        URL = url_or_id if url_or_id.startswith('https') else f'https://www.instagram.com/stories/{url_or_id}/'
 
-    await page.goto(URL)
+        await page.goto(URL)
 
-    script_data = await set_script_json(page)
+        script_data = await set_script_json(page)
 
-    # try:
-    #     await page.get_by_text('View story', exact=True).click()
-    # except Exception as e:
-    #     print(e)
-    
-    # await page.wait_for_timeout(2500)
+        # try:
+        #     await page.get_by_text('View story', exact=True).click()
+        # except Exception as e:
+        #     print(e)
+        
+        # await page.wait_for_timeout(2500)
 
-    await browser.close()
+        await browser.close()
 
     return extract_stories_media(script_data)
     

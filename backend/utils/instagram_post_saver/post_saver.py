@@ -1,8 +1,8 @@
 import json
 import re
-from typing import Any, Literal, TypedDict
+from typing import Any, Literal
 
-from playwright.async_api import Page, Playwright
+from playwright.async_api import Page, async_playwright
 
 from utils.functions import get, get_first, get_key_paths, save_json
 from utils.instagram_post_saver.models import PostMediaItem, PostProfileItem, PostResponse
@@ -124,17 +124,18 @@ def extract_data(script_data: Any):
     
     return post_response
 
-async def save_post(url: str, p: Playwright):
-    browser = await p.chromium.launch(channel='chrome', headless=True)
-    context = await browser.new_context(storage_state="data/beast.json")
+async def save_post(url: str):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(channel='chrome', headless=True)
+        context = await browser.new_context(storage_state="data/beast.json")
 
-    page = await context.new_page()
+        page = await context.new_page()
 
-    await page.goto(url)
+        await page.goto(url)
 
-    script_json = await set_script_json(page)
+        script_json = await set_script_json(page)
 
-    await browser.close()
+        await browser.close()
 
     result = extract_data(script_json)
 
