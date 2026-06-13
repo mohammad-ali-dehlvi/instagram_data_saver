@@ -15,6 +15,82 @@ export type HttpValidationError = {
 };
 
 /**
+ * JobData[MultiplePostResponse]
+ */
+export type JobDataMultiplePostResponse = {
+    /**
+     * Event
+     */
+    event: 'progress' | 'completed' | 'error';
+    /**
+     * Completed
+     */
+    completed?: number | number | null;
+    /**
+     * Total
+     */
+    total?: number | number | null;
+    data?: MultiplePostResponse | null;
+};
+
+/**
+ * MultiplePostItem
+ */
+export type MultiplePostItem = {
+    /**
+     * Id
+     */
+    id?: string | number | null;
+    cover_media?: PostMediaItem | null;
+    /**
+     * Media
+     */
+    media?: Array<PostMediaItem>;
+};
+
+/**
+ * MultiplePostProfileItem
+ */
+export type MultiplePostProfileItem = {
+    /**
+     * Full Name
+     */
+    full_name: string | null;
+    /**
+     * Username
+     */
+    username: string | null;
+    /**
+     * Profile Pic Url
+     */
+    profile_pic_url: string | null;
+    /**
+     * Posts
+     */
+    posts?: Array<MultiplePostItem>;
+};
+
+/**
+ * MultiplePostResponse
+ */
+export type MultiplePostResponse = {
+    /**
+     * Result
+     */
+    result?: Array<MultiplePostProfileItem>;
+};
+
+/**
+ * PostAllJobResponse
+ */
+export type PostAllJobResponse = {
+    /**
+     * Job Id
+     */
+    job_id: string;
+};
+
+/**
  * PostMediaItem
  */
 export type PostMediaItem = {
@@ -60,6 +136,11 @@ export type PostResponse = {
      */
     result?: Array<PostProfileItem>;
 };
+
+/**
+ * StorageState
+ */
+export type StorageState = 'data/beast.json';
 
 /**
  * StoryMediaItem
@@ -139,6 +220,10 @@ export type StoriesOrHighlightsStoriesSaveGetData = {
          * Url Or Id
          */
         url_or_id: string;
+        /**
+         * Storage State
+         */
+        storage_state?: StorageState | null;
     };
     url: '/stories/save';
 };
@@ -169,6 +254,10 @@ export type PostsSavePostsSaveGetData = {
          * Url
          */
         url: string;
+        /**
+         * Storage State
+         */
+        storage_state?: StorageState | null;
     };
     url: '/posts/save';
 };
@@ -190,3 +279,81 @@ export type PostsSavePostsSaveGetResponses = {
 };
 
 export type PostsSavePostsSaveGetResponse = PostsSavePostsSaveGetResponses[keyof PostsSavePostsSaveGetResponses];
+
+export type PostsAllPostsAllJobGetData = {
+    body?: never;
+    path?: never;
+    query: {
+        /**
+         * Id
+         */
+        id: string;
+        /**
+         * Storage State
+         */
+        storage_state?: StorageState | null;
+    };
+    url: '/posts/all/job';
+};
+
+export type PostsAllPostsAllJobGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostsAllPostsAllJobGetError = PostsAllPostsAllJobGetErrors[keyof PostsAllPostsAllJobGetErrors];
+
+export type PostsAllPostsAllJobGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: PostAllJobResponse;
+};
+
+export type PostsAllPostsAllJobGetResponse = PostsAllPostsAllJobGetResponses[keyof PostsAllPostsAllJobGetResponses];
+
+export type PostsAllEventPostsAllJobIdGetData = {
+    body?: never;
+    path: {
+        /**
+         * Job Id
+         */
+        job_id: string;
+    };
+    query?: never;
+    url: '/posts/all/{job_id}';
+};
+
+export type PostsAllEventPostsAllJobIdGetErrors = {
+    /**
+     * Validation Error
+     */
+    422: HttpValidationError;
+};
+
+export type PostsAllEventPostsAllJobIdGetError = PostsAllEventPostsAllJobIdGetErrors[keyof PostsAllEventPostsAllJobIdGetErrors];
+
+export type PostsAllEventPostsAllJobIdGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: JobDataMultiplePostResponse;
+};
+
+export type PostsAllEventPostsAllJobIdGetResponse = PostsAllEventPostsAllJobIdGetResponses[keyof PostsAllEventPostsAllJobIdGetResponses];
+
+export type TestTestGetData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/test';
+};
+
+export type TestTestGetResponses = {
+    /**
+     * Successful Response
+     */
+    200: unknown;
+};

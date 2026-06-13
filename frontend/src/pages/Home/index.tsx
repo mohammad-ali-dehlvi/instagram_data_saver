@@ -20,6 +20,13 @@ export default function HomePage() {
         description: "Posts saver",
         tag: "Insta",
       },
+      {
+        id: "3",
+        label: "All Posts",
+        url: "/posts/all",
+        description: "All posts by profile ID",
+        tag: "Insta",
+      },
     ];
   }, []);
 

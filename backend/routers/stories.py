@@ -1,15 +1,13 @@
 from fastapi import APIRouter
 
-# from backend.utils.dependencies import get_playwright
-# from backend.utils.instagram_story_saver.functions import StoryResponse
-# from backend.utils.instagram_story_saver.story_saver import save_story
-from utils.instagram_story_saver.models import StoryResponse
-from utils.instagram_story_saver.story_saver import save_story
+from utils.functions import get_storage_state
+from utils.instagram_data_saver import StoryResponse, save_story
+from utils.models.generated.storage_state import StorageState
 
 stories_router = APIRouter(prefix='/stories')
 
 @stories_router.get('/save', response_model=StoryResponse, description='Download stories as well as highlights')
-async def stories_or_highlights(url_or_id: str):
-    data = await save_story(url_or_id)
+async def stories_or_highlights(url_or_id: str, storage_state: StorageState | None = None):
+    data = await save_story(url_or_id, storage_state=get_storage_state(storage_state).value)
 
     return data

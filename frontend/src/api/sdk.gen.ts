@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { PostsSavePostsSaveGetData, PostsSavePostsSaveGetErrors, PostsSavePostsSaveGetResponses, StoriesOrHighlightsStoriesSaveGetData, StoriesOrHighlightsStoriesSaveGetErrors, StoriesOrHighlightsStoriesSaveGetResponses } from './types.gen';
+import type { PostsAllEventPostsAllJobIdGetData, PostsAllEventPostsAllJobIdGetErrors, PostsAllEventPostsAllJobIdGetResponses, PostsAllPostsAllJobGetData, PostsAllPostsAllJobGetErrors, PostsAllPostsAllJobGetResponses, PostsSavePostsSaveGetData, PostsSavePostsSaveGetErrors, PostsSavePostsSaveGetResponses, StoriesOrHighlightsStoriesSaveGetData, StoriesOrHighlightsStoriesSaveGetErrors, StoriesOrHighlightsStoriesSaveGetResponses, TestTestGetData, TestTestGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -31,3 +31,18 @@ export const storiesOrHighlightsStoriesSaveGet = <ThrowOnError extends boolean =
  * Download 'post' and 'reels'
  */
 export const postsSavePostsSaveGet = <ThrowOnError extends boolean = false>(options: Options<PostsSavePostsSaveGetData, ThrowOnError>): RequestResult<PostsSavePostsSaveGetResponses, PostsSavePostsSaveGetErrors, ThrowOnError> => (options.client ?? client).get<PostsSavePostsSaveGetResponses, PostsSavePostsSaveGetErrors, ThrowOnError>({ url: '/posts/save', ...options });
+
+/**
+ * Posts All
+ */
+export const postsAllPostsAllJobGet = <ThrowOnError extends boolean = false>(options: Options<PostsAllPostsAllJobGetData, ThrowOnError>): RequestResult<PostsAllPostsAllJobGetResponses, PostsAllPostsAllJobGetErrors, ThrowOnError> => (options.client ?? client).get<PostsAllPostsAllJobGetResponses, PostsAllPostsAllJobGetErrors, ThrowOnError>({ url: '/posts/all/job', ...options });
+
+/**
+ * Posts All Event
+ */
+export const postsAllEventPostsAllJobIdGet = <ThrowOnError extends boolean = false>(options: Options<PostsAllEventPostsAllJobIdGetData, ThrowOnError>): RequestResult<PostsAllEventPostsAllJobIdGetResponses, PostsAllEventPostsAllJobIdGetErrors, ThrowOnError> => (options.client ?? client).get<PostsAllEventPostsAllJobIdGetResponses, PostsAllEventPostsAllJobIdGetErrors, ThrowOnError>({ url: '/posts/all/{job_id}', ...options });
+
+/**
+ * Test
+ */
+export const testTestGet = <ThrowOnError extends boolean = false>(options?: Options<TestTestGetData, ThrowOnError>): RequestResult<TestTestGetResponses, unknown, ThrowOnError> => (options?.client ?? client).get<TestTestGetResponses, unknown, ThrowOnError>({ url: '/test', ...options });

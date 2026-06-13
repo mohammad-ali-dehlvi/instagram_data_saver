@@ -5,8 +5,6 @@ export default function StoriesPage() {
   return (
     <StoryLookupPageInner
       onFetch={async (query) => {
-        console.log(query);
-
         const res = await storiesOrHighlightsStoriesSaveGet({
           query: { url_or_id: query },
         });

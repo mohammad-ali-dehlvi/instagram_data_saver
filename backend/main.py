@@ -2,8 +2,7 @@ import asyncio
 import sys
 
 # from backend.routers.stories import stories_router
-from routers.stories import stories_router
-from routers.posts import posts_router
+from utils.functions import generate_browser_storage_state_enum
 
 if sys.platform == "win32":
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
@@ -25,6 +24,11 @@ async def lifespan(app: FastAPI):
     # await context.close()
     # await browser.close()
     # await playwright.stop()
+
+generate_browser_storage_state_enum()
+
+from routers.stories import stories_router
+from routers.posts import posts_router
 
 app = FastAPI(
     lifespan=lifespan

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { PostMediaItem } from "../../../api";
 import { Box, Typography } from "@mui/material";
 import BrokenImage from "@mui/icons-material/BrokenImage";
@@ -17,13 +17,45 @@ export default function MediaCell({
   borderRadius?: number;
 }) {
   const [errored, setErrored] = useState(false);
+  const [shouldLoad, setShouldLoad] = useState(false);
+  const cellRef = useRef<HTMLDivElement>(null);
 
   // video_url takes priority
   const isVideo = !!item.video_url;
   const src = item.video_url || item.image_url;
+  const isUnavailable = !src || errored;
+
+  useEffect(() => {
+    setErrored(false);
+    setShouldLoad(false);
+  }, [src]);
+
+  useEffect(() => {
+    const node = cellRef.current;
+    if (!node || shouldLoad) return;
+
+    if (!("IntersectionObserver" in window)) {
+      setShouldLoad(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "600px 0px" },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [shouldLoad]);
 
   return (
     <Box
+      ref={cellRef}
       onClick={onClick}
       sx={{
         position: "relative",
@@ -37,7 +69,7 @@ export default function MediaCell({
         "&:hover .cell-overlay": onClick ? { opacity: 1 } : {},
       }}
     >
-      {src && !errored ? (
+      {src && shouldLoad && !errored ? (
         isVideo ? (
           <Box
             component="video"
@@ -45,7 +77,8 @@ export default function MediaCell({
             muted
             loop
             playsInline
-            autoPlay
+            autoPlay={shouldLoad}
+            preload="none"
             onError={() => setErrored(true)}
             sx={{
               position: "absolute",
@@ -60,6 +93,8 @@ export default function MediaCell({
             component="img"
             src={src}
             alt=""
+            loading="lazy"
+            decoding="async"
             onError={() => setErrored(true)}
             sx={{
               position: "absolute",
@@ -70,7 +105,7 @@ export default function MediaCell({
             }}
           />
         )
-      ) : (
+      ) : isUnavailable ? (
         <Box
           sx={{
             position: "absolute",
@@ -87,6 +122,14 @@ export default function MediaCell({
             <ImageNotSupported sx={{ fontSize: 20, opacity: 0.4 }} />
           )}
         </Box>
+      ) : (
+        <Box
+          sx={{
+            position: "absolute",
+            inset: 0,
+            bgcolor: (theme) => theme.palette.action.hover,
+          }}
+        />
       )}
 
       {/* Video badge — small pill in corner so user knows it's a video */}

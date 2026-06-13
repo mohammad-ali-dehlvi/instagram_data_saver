@@ -3,6 +3,7 @@
         "frontend": "cd ./frontend && npm run dev",
         "generate-client": "cd ./frontend && npm run generate-client",
         "backend": "cd ./backend && uvicorn main:app",
+        "backend-login": "cd ./backend && python -m utils.instagram_data_saver.login.__init__",
         "backend-test": "cd ./backend && python -m utils.test.main"
     }
 }
