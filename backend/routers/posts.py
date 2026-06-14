@@ -6,15 +6,15 @@ from sse_starlette.sse import EventSourceResponse
 
 from utils.instagram_data_saver.utils.post_functions import MultiPostProgressDict
 from utils.functions import get_storage_state
-from utils.models.posts import JobData, PostAllJobResponse
+from utils.models.posts import JobData, PostAllJobResponse, PostAllRequest, PostSaveRequest
 from utils.instagram_data_saver import MultiplePostResponse, PostResponse, save_post, save_post_multiple
 from utils.models.generated.storage_state import StorageState
 
 posts_router = APIRouter(prefix='/posts')
 
-@posts_router.get('/save', response_model=PostResponse, description="Download 'post' and 'reels'")
-async def posts_save(url: str, storage_state: StorageState | None = None):
-    data = await save_post(url, storage_state=get_storage_state(storage_state).value)
+@posts_router.post('/save', response_model=PostResponse, description="Download 'post' and 'reels'")
+async def posts_save(req: PostSaveRequest):
+    data = await save_post(req.url, storage_state=get_storage_state(req.storage_state).value)
 
     return data
 
@@ -22,8 +22,8 @@ async def posts_save(url: str, storage_state: StorageState | None = None):
 
 jobs: dict[str, list[JobData]] = {}
 
-@posts_router.get('/all/job', response_model=PostAllJobResponse)
-async def posts_all(id: str, storage_state: StorageState | None = None):
+@posts_router.post('/all/job', response_model=PostAllJobResponse)
+async def posts_all(req: PostAllRequest):
     job_id = str(uuid.uuid4())
     jobs[job_id] = []
     async def main(job_id: str):
@@ -38,8 +38,8 @@ async def posts_all(id: str, storage_state: StorageState | None = None):
                 )
                 await asyncio.sleep(0)
             data: MultiplePostResponse = await save_post_multiple(
-                id,
-                storage_state=get_storage_state(storage_state).value,
+                req.id,
+                storage_state=get_storage_state(req.storage_state).value,
                 n=-1,
                 progress_callback=progress_callback
             )

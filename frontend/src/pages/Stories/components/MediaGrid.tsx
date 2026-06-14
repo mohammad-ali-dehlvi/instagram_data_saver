@@ -48,6 +48,7 @@ export default function MediaGrid({ media }: { media: StoryMediaItem[] }) {
                   src={imgSrc}
                   alt=""
                   onError={(e) => {
+                    console.log(e);
                     setErrored((p) => ({ ...p, [i]: true }));
                   }}
                   sx={{

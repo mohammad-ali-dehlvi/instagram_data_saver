@@ -21,6 +21,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import { IdleState } from "./IdleState";
 import EmptyResult from "./EmptyResult";
 import ProfileCard from "./ProfileCard";
+import StorageStateSelect from "../../../components/StorageStateSelect";
 
 interface StoryLookupPageProps {
   /**
@@ -63,6 +64,7 @@ export default function StoryLookupPageInner({
       setStatus("success");
     } catch (e: unknown) {
       console.log(e);
+      alert(e);
       setErrorMsg(e instanceof Error ? e.message : "Something went wrong");
       setStatus("error");
     }
@@ -97,6 +99,8 @@ export default function StoryLookupPageInner({
           </Typography>
           <Divider sx={{ mt: 2, opacity: 0.35 }} />
         </Box>
+
+        <StorageStateSelect />
 
         {/* Input */}
         <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>

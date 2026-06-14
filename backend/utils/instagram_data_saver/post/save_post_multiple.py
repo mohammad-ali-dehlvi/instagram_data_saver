@@ -8,7 +8,7 @@ from utils.instagram_data_saver.utils.functions import save_json, scroll_to_bott
 from utils.instagram_data_saver.utils.post_functions import MultiPostProgressDict, extract_data_from_list, set_script_json_response
 
 
-async def save_post_multiple(id: str, storage_state: StorageState | str | Path | None = None, n: int = 0, progress_callback: Callable[[MultiPostProgressDict], None | CoroutineType[Any, Any, None]] | None = None):
+async def save_post_multiple(id: str, storage_state: StorageState | str | Path | None = None, n: int = 0, progress_callback: Callable[[MultiPostProgressDict], Any] | None = None):
     URL = f"https://www.instagram.com/{id}"
     async with async_playwright() as p:
         browser = await p.chromium.launch(channel="chrome", headless=True)

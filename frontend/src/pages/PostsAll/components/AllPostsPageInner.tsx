@@ -25,6 +25,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import EmptyResult from "../../Posts/components/EmptyResult";
 import IdleState from "../../Posts/components/IdleState";
 import AllPostsProfileCard from "./AllPostsProfileCard";
+import StorageStateSelect from "../../../components/StorageStateSelect";
 
 interface AllPostsPageInnerProps {
   onStartJob: (id: string) => Promise<{
@@ -173,6 +174,8 @@ export default function AllPostsPageInner({
           </Typography>
           <Divider sx={{ mt: 2, opacity: 0.35 }} />
         </Box>
+
+        <StorageStateSelect />
 
         <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>
           <TextField

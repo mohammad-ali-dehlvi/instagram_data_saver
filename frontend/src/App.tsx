@@ -3,6 +3,7 @@ import "./App.css";
 import Router from "./router";
 import { useMemo, useState } from "react";
 import { buildTheme } from "./theme/factory";
+import StorageStateContextProvider from "./context/StorageState";
 
 function App() {
   const defaultMode = "dark";
@@ -14,10 +15,12 @@ function App() {
   );
   return (
     <>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router />
-      </ThemeProvider>
+      <StorageStateContextProvider>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router />
+        </ThemeProvider>
+      </StorageStateContextProvider>
     </>
   );
 }

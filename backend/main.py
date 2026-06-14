@@ -25,8 +25,6 @@ async def lifespan(app: FastAPI):
     # await browser.close()
     # await playwright.stop()
 
-generate_browser_storage_state_enum()
-
 from routers.stories import stories_router
 from routers.posts import posts_router
 
@@ -36,7 +34,8 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],  # The origin of your frontend
+    # allow_origins=["http://localhost:5173"],  # The origin of your frontend
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
     allow_headers=["*"],  # Allows all headers

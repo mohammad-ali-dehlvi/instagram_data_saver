@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, RequestResult, TDataShape } from './client';
 import { client } from './client.gen';
-import type { PostsAllEventPostsAllJobIdGetData, PostsAllEventPostsAllJobIdGetErrors, PostsAllEventPostsAllJobIdGetResponses, PostsAllPostsAllJobGetData, PostsAllPostsAllJobGetErrors, PostsAllPostsAllJobGetResponses, PostsSavePostsSaveGetData, PostsSavePostsSaveGetErrors, PostsSavePostsSaveGetResponses, StoriesOrHighlightsStoriesSaveGetData, StoriesOrHighlightsStoriesSaveGetErrors, StoriesOrHighlightsStoriesSaveGetResponses, TestTestGetData, TestTestGetResponses } from './types.gen';
+import type { PostsAllEventPostsAllJobIdGetData, PostsAllEventPostsAllJobIdGetErrors, PostsAllEventPostsAllJobIdGetResponses, PostsAllPostsAllJobPostData, PostsAllPostsAllJobPostErrors, PostsAllPostsAllJobPostResponses, PostsSavePostsSavePostData, PostsSavePostsSavePostErrors, PostsSavePostsSavePostResponses, StoriesOrHighlightsStoriesSavePostData, StoriesOrHighlightsStoriesSavePostErrors, StoriesOrHighlightsStoriesSavePostResponses, TestTestGetData, TestTestGetResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean, TResponse = unknown> = Options2<TData, ThrowOnError, TResponse> & {
     /**
@@ -23,19 +23,40 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
  *
  * Download stories as well as highlights
  */
-export const storiesOrHighlightsStoriesSaveGet = <ThrowOnError extends boolean = false>(options: Options<StoriesOrHighlightsStoriesSaveGetData, ThrowOnError>): RequestResult<StoriesOrHighlightsStoriesSaveGetResponses, StoriesOrHighlightsStoriesSaveGetErrors, ThrowOnError> => (options.client ?? client).get<StoriesOrHighlightsStoriesSaveGetResponses, StoriesOrHighlightsStoriesSaveGetErrors, ThrowOnError>({ url: '/stories/save', ...options });
+export const storiesOrHighlightsStoriesSavePost = <ThrowOnError extends boolean = false>(options: Options<StoriesOrHighlightsStoriesSavePostData, ThrowOnError>): RequestResult<StoriesOrHighlightsStoriesSavePostResponses, StoriesOrHighlightsStoriesSavePostErrors, ThrowOnError> => (options.client ?? client).post<StoriesOrHighlightsStoriesSavePostResponses, StoriesOrHighlightsStoriesSavePostErrors, ThrowOnError>({
+    url: '/stories/save',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Posts Save
  *
  * Download 'post' and 'reels'
  */
-export const postsSavePostsSaveGet = <ThrowOnError extends boolean = false>(options: Options<PostsSavePostsSaveGetData, ThrowOnError>): RequestResult<PostsSavePostsSaveGetResponses, PostsSavePostsSaveGetErrors, ThrowOnError> => (options.client ?? client).get<PostsSavePostsSaveGetResponses, PostsSavePostsSaveGetErrors, ThrowOnError>({ url: '/posts/save', ...options });
+export const postsSavePostsSavePost = <ThrowOnError extends boolean = false>(options: Options<PostsSavePostsSavePostData, ThrowOnError>): RequestResult<PostsSavePostsSavePostResponses, PostsSavePostsSavePostErrors, ThrowOnError> => (options.client ?? client).post<PostsSavePostsSavePostResponses, PostsSavePostsSavePostErrors, ThrowOnError>({
+    url: '/posts/save',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Posts All
  */
-export const postsAllPostsAllJobGet = <ThrowOnError extends boolean = false>(options: Options<PostsAllPostsAllJobGetData, ThrowOnError>): RequestResult<PostsAllPostsAllJobGetResponses, PostsAllPostsAllJobGetErrors, ThrowOnError> => (options.client ?? client).get<PostsAllPostsAllJobGetResponses, PostsAllPostsAllJobGetErrors, ThrowOnError>({ url: '/posts/all/job', ...options });
+export const postsAllPostsAllJobPost = <ThrowOnError extends boolean = false>(options: Options<PostsAllPostsAllJobPostData, ThrowOnError>): RequestResult<PostsAllPostsAllJobPostResponses, PostsAllPostsAllJobPostErrors, ThrowOnError> => (options.client ?? client).post<PostsAllPostsAllJobPostResponses, PostsAllPostsAllJobPostErrors, ThrowOnError>({
+    url: '/posts/all/job',
+    ...options,
+    headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+    }
+});
 
 /**
  * Posts All Event

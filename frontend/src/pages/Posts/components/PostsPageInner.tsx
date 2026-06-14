@@ -18,6 +18,7 @@ import ArrowForward from "@mui/icons-material/ArrowForward";
 import IdleState from "./IdleState";
 import EmptyResult from "./EmptyResult";
 import PostProfileCard from "./PostProfileCard";
+import StorageStateSelect from "../../../components/StorageStateSelect";
 
 interface PostLookupPageProps {
   onFetch: (url: string) => Promise<{
@@ -87,6 +88,8 @@ export default function PostLookupPageInner({ onFetch }: PostLookupPageProps) {
           </Typography>
           <Divider sx={{ mt: 2, opacity: 0.35 }} />
         </Box>
+
+        <StorageStateSelect />
 
         {/* Input */}
         <Box sx={{ display: "flex", gap: 1, alignItems: "flex-start" }}>

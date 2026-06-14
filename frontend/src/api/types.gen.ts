@@ -91,6 +91,17 @@ export type PostAllJobResponse = {
 };
 
 /**
+ * PostAllRequest
+ */
+export type PostAllRequest = {
+    /**
+     * Id
+     */
+    id: string;
+    storage_state?: StorageState | null;
+};
+
+/**
  * PostMediaItem
  */
 export type PostMediaItem = {
@@ -138,9 +149,36 @@ export type PostResponse = {
 };
 
 /**
+ * PostSaveRequest
+ */
+export type PostSaveRequest = {
+    /**
+     * Url
+     */
+    url: string;
+    storage_state?: StorageState | null;
+};
+
+/**
  * StorageState
  */
-export type StorageState = 'data/beast.json';
+export const StorageState = { DATA_BEAST_JSON: 'data/beast.json', DATA_M_A_D_TEMP_JSON: 'data/m_a_d_temp.json' } as const;
+
+/**
+ * StorageState
+ */
+export type StorageState = typeof StorageState[keyof typeof StorageState];
+
+/**
+ * StoriesOrHighlightsRequest
+ */
+export type StoriesOrHighlightsRequest = {
+    /**
+     * Url Or Id
+     */
+    url_or_id: string;
+    storage_state?: StorageState | null;
+};
 
 /**
  * StoryMediaItem
@@ -212,107 +250,80 @@ export type ValidationError = {
     };
 };
 
-export type StoriesOrHighlightsStoriesSaveGetData = {
-    body?: never;
+export type StoriesOrHighlightsStoriesSavePostData = {
+    body: StoriesOrHighlightsRequest;
     path?: never;
-    query: {
-        /**
-         * Url Or Id
-         */
-        url_or_id: string;
-        /**
-         * Storage State
-         */
-        storage_state?: StorageState | null;
-    };
+    query?: never;
     url: '/stories/save';
 };
 
-export type StoriesOrHighlightsStoriesSaveGetErrors = {
+export type StoriesOrHighlightsStoriesSavePostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type StoriesOrHighlightsStoriesSaveGetError = StoriesOrHighlightsStoriesSaveGetErrors[keyof StoriesOrHighlightsStoriesSaveGetErrors];
+export type StoriesOrHighlightsStoriesSavePostError = StoriesOrHighlightsStoriesSavePostErrors[keyof StoriesOrHighlightsStoriesSavePostErrors];
 
-export type StoriesOrHighlightsStoriesSaveGetResponses = {
+export type StoriesOrHighlightsStoriesSavePostResponses = {
     /**
      * Successful Response
      */
     200: StoryResponse;
 };
 
-export type StoriesOrHighlightsStoriesSaveGetResponse = StoriesOrHighlightsStoriesSaveGetResponses[keyof StoriesOrHighlightsStoriesSaveGetResponses];
+export type StoriesOrHighlightsStoriesSavePostResponse = StoriesOrHighlightsStoriesSavePostResponses[keyof StoriesOrHighlightsStoriesSavePostResponses];
 
-export type PostsSavePostsSaveGetData = {
-    body?: never;
+export type PostsSavePostsSavePostData = {
+    body: PostSaveRequest;
     path?: never;
-    query: {
-        /**
-         * Url
-         */
-        url: string;
-        /**
-         * Storage State
-         */
-        storage_state?: StorageState | null;
-    };
+    query?: never;
     url: '/posts/save';
 };
 
-export type PostsSavePostsSaveGetErrors = {
+export type PostsSavePostsSavePostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PostsSavePostsSaveGetError = PostsSavePostsSaveGetErrors[keyof PostsSavePostsSaveGetErrors];
+export type PostsSavePostsSavePostError = PostsSavePostsSavePostErrors[keyof PostsSavePostsSavePostErrors];
 
-export type PostsSavePostsSaveGetResponses = {
+export type PostsSavePostsSavePostResponses = {
     /**
      * Successful Response
      */
     200: PostResponse;
 };
 
-export type PostsSavePostsSaveGetResponse = PostsSavePostsSaveGetResponses[keyof PostsSavePostsSaveGetResponses];
+export type PostsSavePostsSavePostResponse = PostsSavePostsSavePostResponses[keyof PostsSavePostsSavePostResponses];
 
-export type PostsAllPostsAllJobGetData = {
-    body?: never;
+export type PostsAllPostsAllJobPostData = {
+    body: PostAllRequest;
     path?: never;
-    query: {
-        /**
-         * Id
-         */
-        id: string;
-        /**
-         * Storage State
-         */
-        storage_state?: StorageState | null;
-    };
+    query?: never;
     url: '/posts/all/job';
 };
 
-export type PostsAllPostsAllJobGetErrors = {
+export type PostsAllPostsAllJobPostErrors = {
     /**
      * Validation Error
      */
     422: HttpValidationError;
 };
 
-export type PostsAllPostsAllJobGetError = PostsAllPostsAllJobGetErrors[keyof PostsAllPostsAllJobGetErrors];
+export type PostsAllPostsAllJobPostError = PostsAllPostsAllJobPostErrors[keyof PostsAllPostsAllJobPostErrors];
 
-export type PostsAllPostsAllJobGetResponses = {
+export type PostsAllPostsAllJobPostResponses = {
     /**
      * Successful Response
      */
     200: PostAllJobResponse;
 };
 
-export type PostsAllPostsAllJobGetResponse = PostsAllPostsAllJobGetResponses[keyof PostsAllPostsAllJobGetResponses];
+export type PostsAllPostsAllJobPostResponse = PostsAllPostsAllJobPostResponses[keyof PostsAllPostsAllJobPostResponses];
 
 export type PostsAllEventPostsAllJobIdGetData = {
     body?: never;
