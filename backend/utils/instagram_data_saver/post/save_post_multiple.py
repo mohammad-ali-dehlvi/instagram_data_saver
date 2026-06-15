@@ -4,7 +4,6 @@ from typing import Any, Callable
 
 from playwright.async_api import StorageState, async_playwright
 
-from utils.instagram_data_saver.utils.functions import save_json, scroll_to_bottom
 from utils.instagram_data_saver.utils.post_functions import MultiPostProgressDict, extract_data_from_list, set_script_json_response
 
 
@@ -48,7 +47,7 @@ async def save_post_multiple(id: str, storage_state: StorageState | str | Path |
             
     # print(d)
 
-    save_json(result.to_dict(), f"result.json")
+    # save_json(result.to_dict(), f"result.json")
 
     return result
 
