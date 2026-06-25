@@ -15,7 +15,7 @@ def save_json(data: Any, file_name: str):
     if not path.parent.exists():
         path.parent.mkdir(parents=True, exist_ok=True)
 
-    with path.open('w') as file:
+    with path.open('w', encoding="utf-8") as file:
         file.write(json.dumps(data, indent=2))
 
 def load_json(file_name: str):

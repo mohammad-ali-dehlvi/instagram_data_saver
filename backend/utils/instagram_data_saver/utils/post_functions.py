@@ -237,7 +237,8 @@ def get_items(script_data: Any, priority_key: Literal['items', 'edges'] = 'items
     if len(items_paths) == 0:
         items_paths = get_key_paths(script_data, alt_key)
 
-    items = get_first(script_data, items_paths, optional_return=[])
+    # items = get_first(script_data, items_paths, optional_return=[])
+    items = [get(script_data, key) for key in items_paths]
 
     return items
 

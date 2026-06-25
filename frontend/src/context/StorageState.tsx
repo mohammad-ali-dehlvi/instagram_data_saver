@@ -15,7 +15,9 @@ type SelectedStorageType = (typeof StorageState)[keyof typeof StorageState];
 export const SHOW_STORAGE_STATE_SELECT = true;
 export const storageStateOptions = Object.values(StorageState);
 export const shouldShowStorageStateSelect =
-  SHOW_STORAGE_STATE_SELECT && storageStateOptions.length > 1;
+  import.meta.env.VITE_SHOW_ID_SELECT === "visible" &&
+  SHOW_STORAGE_STATE_SELECT &&
+  storageStateOptions.length > 1;
 
 interface StorageStateContextType {
   selectedStorageState: SelectedStorageType;
@@ -35,9 +37,10 @@ export default function StorageStateContextProvider(
 ) {
   const { children } = props;
   const [selectedStorageState, setSelectedStorageState] =
-    useState<SelectedStorageType>(storageStateOptions[0]);
+    useState<SelectedStorageType>(StorageState.DATA_M_A_D_TEMP_JSON);
 
   const contextValue = useMemo(() => {
+    console.log(import.meta.env);
     return {
       selectedStorageState,
       setSelectedStorageState,

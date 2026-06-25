@@ -2,52 +2,36 @@ from pathlib import Path
 from types import CoroutineType
 from typing import Any, Callable
 
-from playwright.async_api import StorageState, async_playwright
+from playwright.async_api import BrowserContext, StorageState, async_playwright
 
 from utils.instagram_data_saver.utils.post_functions import MultiPostProgressDict, extract_data_from_list, set_script_json_response
 
-
-async def save_post_multiple(id: str, storage_state: StorageState | str | Path | None = None, n: int = 0, progress_callback: Callable[[MultiPostProgressDict], Any] | None = None):
+async def save_post_multiple_internal(context: BrowserContext, id: str, n: int = 0, progress_callback: Callable[[MultiPostProgressDict], Any] | None = None):
     URL = f"https://www.instagram.com/{id}"
-    async with async_playwright() as p:
-        browser = await p.chromium.launch(channel="chrome", headless=True)
-        context = await browser.new_context(storage_state=storage_state)
-        page = await context.new_page()
+    page = await context.new_page()
 
-        future = await set_script_json_response(page, n, progress_callback=progress_callback)
+    future = await set_script_json_response(page, n, progress_callback=progress_callback)
 
-        await page.goto(URL)
+    await page.goto(URL)
 
-        await page.wait_for_timeout(2000)
+    await page.wait_for_timeout(2000)
 
-        await future
-        # await scroll_to_bottom(page, 2)
-
-        await browser.close()
+    await future
 
     script_data_list = future.result()
 
-    # print(data)
-
     result = extract_data_from_list(script_data_list)
 
-    # d = {
-    #     'posts': 0,
-    #     'cover_media': 0,
-    #     'media': 0
-    # }
-    
-    # for profile_item in result.result:
-    #     posts = profile_item.posts
-    #     for post in posts:
-    #         d["posts"] += 1
-    #         d["media"] += len(post.media)
-    #         if post.cover_media:
-    #             d["cover_media"] += 1
-            
-    # print(d)
+    return result
 
-    # save_json(result.to_dict(), f"result.json")
+async def save_post_multiple(id: str, storage_state: StorageState | str | Path | None = None, n: int = 0, progress_callback: Callable[[MultiPostProgressDict], Any] | None = None):
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(channel="chrome", headless=True)
+        context = await browser.new_context(storage_state=storage_state)
+        result = await save_post_multiple_internal(context, id, n, progress_callback)
+        # await scroll_to_bottom(page, 2)
+
+        await browser.close()
 
     return result
 

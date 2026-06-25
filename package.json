@@ -1,6 +1,7 @@
 {
     "scripts": {
         "frontend": "cd ./frontend && npm run dev",
+        "frontend-build": "cd ./frontend && npm run build",
         "generate-client": "cd ./frontend && npm run generate-client",
         "backend": "cd ./backend && uvicorn main:app --host 0.0.0.0",
         "backend-login": "cd ./backend && python -m utils.instagram_data_saver.login.__init__",
